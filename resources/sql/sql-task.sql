@@ -111,8 +111,7 @@ CREATE DOMAIN phoneType AS TEXT CHECK (VALUE ~* '^\+?375(17|29|33|44|25)[0-9]{7}
 CREATE TABLE customers_data
 (
     customer_id bigserial PRIMARY KEY NOT NULL,
-    firstName   varchar(30)           NOT NULL CHECK (firstName ~* '^[A-Z]*$'
-        ),
+    firstName   varchar(30)           NOT NULL CHECK (firstName ~* '^[A-Z]*$'),
     lastName    varchar(30)           NOT NULL CHECK (lastName ~* '^[A-Z]*$'),
     email       emailType,
     phone       phoneType
