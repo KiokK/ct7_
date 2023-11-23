@@ -24,20 +24,15 @@ SELECT tf.ticket_no, passenger_name, contact_data
 FROM tickets t
          JOIN bookings ON t.book_ref = bookings.book_ref
          JOIN ticket_flights tf ON t.ticket_no = tf.ticket_no
-         JOIN flights ON tf.flight_id = flights.flight_id
-         JOIN aircrafts a ON flights.aircraft_code = a.aircraft_code
-         JOIN seats s on a.aircraft_code = s.aircraft_code
-WHERE s.fare_conditions = 'Business'
+WHERE tf.fare_conditions = 'Business'
 ORDER BY book_date DESC
 LIMIT 10;
 
 --5. Найти все рейсы, у которых нет забронированных мест в бизнес-классе (fare_conditions = 'Business')
 SELECT flight_id, flight_no
 FROM flights
-WHERE flight_id NOT IN (SELECT f.flight_id
-                        FROM flights f
-                                 JOIN aircrafts a ON f.aircraft_code = a.aircraft_code
-                                 JOIN seats s on a.aircraft_code = s.aircraft_code
+WHERE flight_id NOT IN (SELECT tf.flight_id
+                        FROM ticket_flights tf
                         WHERE fare_conditions = 'Business');
 
 --6. Получить список аэропортов (airport_name) и городов (city), в которых есть рейсы с задержкой
